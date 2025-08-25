@@ -184,6 +184,15 @@ services:
       - /docker/frps/frps.toml:/etc/frp/frps.toml:ro
 ```
 
+### 直接使用`docker run`
+
+```bash
+docker run -d --name=frps --restart=always \
+    --network host \
+    -v /docker/frps/frps.toml:/frp/frps.toml  \
+    stilleshan/frps
+```
+
 ### 文件：`frps.toml`
 
 ```toml
@@ -267,6 +276,28 @@ services:
     volumes:
       - /docker/openvpn:/etc/openvpn
 ```
+
+### 直接使用`docker run`
+
+``` bash
+docker run -d --name=frpc --restart=always \
+    --network host \
+    -v /docker/frpc/frpc.toml:/frp/frpc.toml  \
+    stilleshan/frpc
+    
+docker run -v /docker/oepnvpn/data:/data --rm yyxx/openvpn --init
+docker run -d \
+  --cap-add=NET_ADMIN \
+  -p 1194:1194/udp \
+  -p 8833:8833 \
+  -e ADMIN_USERNAME=admin \
+  -e ADMIN_PASSWORD=admin \
+  -v /docker/oepnvpn/data:/data \
+  yyxx/openvpn
+
+```
+
+
 
 ### 文件：`frpc.toml`
 
